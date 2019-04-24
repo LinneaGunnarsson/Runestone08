@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://127.0.0.1:5000');
+	var socket = io.connect('http://130.243.217.176:5000');
 	socket.on('connect', function() {
 		socket.send('User has connected!');
 	});
@@ -20,6 +20,13 @@ $(document).ready(function() {
 		$('#myMessage').val('');
 	});
 });
+
+$myMessage.onkeydown = function(e){
+y = e.keyCode
+if(y == 37){
+console.log("upp")
+}
+};
 </script>
 <ul id="messages"></ul>
 <input type="text" id="myMessage">
