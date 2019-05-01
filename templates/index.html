@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://130.243.217.176:5000');
+	var socket = io.connect('http://192.168.1.106:5000');
 	socket.on('connect', function() {
 		socket.send('User has connected!');
 	});
@@ -19,9 +19,22 @@ $(document).ready(function() {
 		socket.send($('#myMessage').val());
 		$('#myMessage').val('');
 	});
+	$('#commandbutton').on('click', function() {
+		socket.send('taking control');
+		
+		var elem = document.getElementById('commandbutton');
+		if(elem.value === '0'){
+			elem.value = '1';	
+		elem.innerHTML = "Release control";
+		}
+		else{
+			elem.value = '0';	
+		elem.innerHTML = "Take control";
+		}
+	});
 });
 
-$myMessage.onkeydown = function(e){
+$('myMessage').onkeydown = function(e){
 y = e.keyCode
 if(y == 37){
 console.log("upp")
@@ -31,5 +44,6 @@ console.log("upp")
 <ul id="messages"></ul>
 <input type="text" id="myMessage">
 <button id="sendbutton">Send</button>
+<button id="commandbutton" value = '0'>Take control</button>
 </body>
 </html>
