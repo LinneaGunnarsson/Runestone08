@@ -5,8 +5,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 
-button = null
-
 @socketio.on('message')
 def handleMessage(msg):
 	print('session id: ' + request.sid)
@@ -21,4 +19,4 @@ def handleManualReq():
 def index():
 	return render_template('index.html')
 if __name__ == '__main__':
-	socketio.run(app, host = "192.168.1.106")
+	socketio.run(app, host = "130.243.223.23")
