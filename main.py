@@ -1,4 +1,4 @@
-from flask import Flask 
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send
 
 app = Flask(__name__)
@@ -7,8 +7,16 @@ socketio = SocketIO(app)
 
 @socketio.on('message')
 def handleMessage(msg):
+	print('session id: ' + request.sid)
 	print('Message: ' + msg)
 	send(msg, broadcast=True)
 
+@socketio.on('manual request')
+def handleManualReq():
+	send('take control', broadcast=True)
+
+@app.route('/')
+def index():
+	return render_template('index.html')
 if __name__ == '__main__':
-	socketio.run(app)
+	socketio.run(app, host = "130.243.223.23")
