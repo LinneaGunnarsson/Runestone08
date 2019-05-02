@@ -7,7 +7,8 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://130.243.223.23:5000');
+	var socket = io.connect('http://130.243.228.9:5000');
+	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
 	});
@@ -20,7 +21,7 @@ $(document).ready(function() {
 		$('#myMessage').val('');
 	});
 	$('#commandbutton').on('click', function() {
-		socket.send('taking control');
+		socket.emit('manual request');
 		
 		var elem = document.getElementById('commandbutton');
 		if(elem.value === '0'){
@@ -31,6 +32,22 @@ $(document).ready(function() {
 			elem.value = '0';	
 		elem.innerHTML = "Take control";
 		}
+	});
+	$('#upbutton').on('click', function() {
+		socket.send('Up');
+		console.log('button up pressed');
+	});
+	$('#downbutton').on('click', function() {
+		socket.send('down');
+		console.log('button down pressed');
+	});
+	$('#rightbutton').on('click', function() {
+		socket.send('right');
+		console.log('button right pressed');
+	});
+	$('#leftbutton').on('click', function() {
+		socket.send('left');
+		console.log('button left pressed');
 	});
 });
 
@@ -45,5 +62,9 @@ console.log("upp")
 <input type="text" id="myMessage">
 <button id="sendbutton">Send</button>
 <button id="commandbutton" value = '0'>Take control</button>
+<button id="upbutton">Up</button>
+<button id="downbutton">down</button>
+<button id="rightbutton">right</button>
+<button id="leftbutton">left</button>
 </body>
 </html>
