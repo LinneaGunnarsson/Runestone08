@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://130.243.228.9:5000');
+	var socket = io.connect('http://192.168.1.39:5000');
 	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
@@ -66,5 +66,9 @@ console.log("upp")
 <button id="downbutton">down</button>
 <button id="rightbutton">right</button>
 <button id="leftbutton">left</button>
+
+<h1>Video streaming demo here</h1>
+<img src="{{ url_for('video_feed') }}">
+
 </body>
 </html>
