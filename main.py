@@ -23,7 +23,6 @@ def handleMessage(msg):
 	print('session id: ' + request.sid)
 	print('Message: ' + msg)
 	send(msg, broadcast=True)
-	talkToRobot(msg)
 
 @socketio.on('manual request')
 def handleManualReq():
@@ -40,6 +39,38 @@ def handleManualReq():
 		send("released")
 		button = 0
 
+
+@socketio.on('up')
+def handleUp():
+	if (button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		send("up", broadcast=True)
+
+@socketio.on('down')
+def handleDown():
+	if (button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		send("down", broadcast=True)
+
+@socketio.on('left')
+def handleLeft():
+	if (button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		send("left", broadcast=True)
+
+@socketio.on('right')
+def handleRight():
+	if (button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		send("right", broadcast=True)
 
 @app.route('/')
 def index():
