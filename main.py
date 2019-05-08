@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, send
 from cameraLaptop import Camera
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecret'
+
 socketio = SocketIO(app)
 button = 0
 
@@ -77,7 +77,7 @@ def handleRight():
 def index():
 	return render_template('index.html')
 
-#TUTORIAL BÖRJAR HÄR
+#TUTORIAL BORJAR HAR
 
 def gen(camera):
 	while True:
@@ -89,10 +89,10 @@ def gen(camera):
 def video_feed():
 	return Response(gen(Camera()),
 		mimetype='multipart/x-mixed-replace; boundary=frame')
-#TUTORIAL SLUTAR HÄR
+#TUTORIAL SLUTAR HAR
 
 
 if __name__ == '__main__':
-	socketio.run(app, host = "192.168.1.39")
+	socketio.run(app, host = "130.243.212.217")
 
 

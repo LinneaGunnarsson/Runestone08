@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://192.168.1.39:5000');
+	var socket = io.connect('http://130.243.212.217:5000');
 	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
