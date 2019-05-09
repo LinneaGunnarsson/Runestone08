@@ -16,5 +16,5 @@ def handleMove(msg):
         s.emit('result', {'re-id': '5678', 'status': 'fail'})
 
 
-s.connect('http://192.168.1.106:5000', namespaces=['/robot'])
-s.wait()
+s.connect('http://192.168.1.106:5000/robot', namespaces=['/robot'])
+#s.wait()
