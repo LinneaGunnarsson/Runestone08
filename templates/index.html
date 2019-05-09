@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://192.168.1.39:5000');
+	var socket = io.connect('http://130.243.212.217:5000');
 	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
@@ -26,6 +26,7 @@ $(document).ready(function() {
 		var elem = document.getElementById('commandbutton');
 		if(elem.value === '0'){
 			elem.value = '1';	
+		commandButton();
 		elem.innerHTML = "Release control";
 		}
 		else{
@@ -33,23 +34,23 @@ $(document).ready(function() {
 		elem.innerHTML = "Take control";
 		}
 	});
+
+	function commandButton(){
 	$('#upbutton').on('click', function() {
-		socket.send('Up');
-		console.log('button up pressed');
+		socket.emit('up');
 	});
 	$('#downbutton').on('click', function() {
-		socket.send('down');
-		console.log('button down pressed');
+		socket.emit('down');
 	});
 	$('#rightbutton').on('click', function() {
-		socket.send('right');
-		console.log('button right pressed');
+		socket.emit('right');
 	});
 	$('#leftbutton').on('click', function() {
-		socket.send('left');
-		console.log('button left pressed');
+		socket.emit('left');
 	});
+}
 });
+
 
 $('myMessage').onkeydown = function(e){
 y = e.keyCode
