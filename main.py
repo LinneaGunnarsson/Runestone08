@@ -17,6 +17,10 @@ def talkToRobot(command):
 	if (command == 'left'):
 		send('left pressed', broadcast=True)
 
+@socketio.on('connect', namespace='/robot')
+def handleRobotConnect():
+	send('Another robot join the warehouse!',broadcast=True)
+
 @socketio.on('message')
 def handleMessage(msg):
 	print('session id: ' + request.sid)
@@ -32,21 +36,21 @@ def handleManualReq():
 		send(msg, broadcast=True)
    
 	elif (request.sid != button):
-		send("Ocupied")
+		send("Occupied")
    
 	else:
 		send("released")
 		button = 0
 
 
-@socketio.on('up')
+@socketio.on('straight')
 def handleUp():
 	if (button == 0):
 		msg = "need to take control first"
 		send(msg, broadcast=True)
 	else:
-		socketio.emit('move', namespace= '/robot')
-		send("up", broadcast=True)
+		socketio.emit('move', {'id' : '1234', 'command' : 'move-straight'}, namespace= '/robot')
+		send("move-straight", broadcast=True)
 
 @socketio.on('down')
 def handleDown():
@@ -62,22 +66,58 @@ def handleLeft():
 		msg = "need to take control first"
 		send(msg, broadcast=True)
 	else:
-		send("left", broadcast=True)
+		socketio.emit('move', {'id' : '1234', 'command' : 'move-left'}, namespace= '/robot')
+		send("move-left", broadcast=True)
 
 @socketio.on('right')
 def handleRight():
 	if (button == 0):
 		msg = "need to take control first"
 		send(msg, broadcast=True)
+		return
 	else:
-		send("right", broadcast=True)
+		socketio.emit('move', {'id' : '1234', 'command' : 'move-right'}, namespace= '/robot')
+		send("move-right", broadcast=True)
+	
+@socketio.on('pick up')
+def handlePickUp():
+	if(button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		socketio.emit('move', {'id' : '1234', 'command' : 'pick-object'}, namespace= '/robot')
+
+@socketio.on('drop')
+def handleDrop():
+	if(button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+	else:
+		socketio.emit('move', {'id' : '1234', 'command' : 'drop-object'}, namespace= '/robot')
+
+@socketio.on('command')
+def handleCommand(msg):
+	if(button == 0):
+		msg = "need to take control first"
+		send(msg, broadcast=True)
+		return
+
+	c = msg['command']
+	socketio.emit('move', {'id' : '1234', 'command' : c}, namespace= '/robot')
+	send(c, broadcast=True)
+
+	while True:
+		@socketio.on('result')
+		def handleResult(msg):
+			send(msg['status'], broadcast=True)
+		break
+
 
 @app.route('/')
 def index():
 	return render_template('index.html')
 
 #TUTORIAL BORJAR HAR
-
 def gen(camera):
 	while True:
 		frame = camera.get_frame()
@@ -93,12 +133,6 @@ def video_feed():
 
 if __name__ == '__main__':
 	socketio.run(app, host = "192.168.1.106", debug = True)
-'''
-	arbitrary = 1
-	fThread = threading.Thread(target = hostFlask, args = (arbitrary,))
-	fThread.daemon = True
-	fThread.start()
-	'''
 
 
 
