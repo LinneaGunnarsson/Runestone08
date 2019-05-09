@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, Response
 from flask_socketio import SocketIO, send
 from cameraLaptop import Camera
+import socket
+import threading
 
 app = Flask(__name__)
 
@@ -91,8 +93,29 @@ def video_feed():
 		mimetype='multipart/x-mixed-replace; boundary=frame')
 #TUTORIAL SLUTAR HAR
 
+def hostSocket():
+	#TESTAR MED SOCKET HÄR
+	HOST = '192.168.1.106'
+	PORT = 65432
+
+	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+		s.bind((HOST,PORT))
+		s.listen()
+		conn, addr = s.accept()
+		with conn:
+			print('Connected by', addr)
+			while True:
+				data = conn.recv(1024)
+				if not data:
+					break
+				conn.sendall(data)
+#SLUTAR TESTA MED SOCKET HÄR
+
+def hostFlask(arbitrary):
+	socketio.run(app, host = "192.168.1.106")
 
 if __name__ == '__main__':
 	socketio.run(app, host = "130.243.212.217")
+
 
 
