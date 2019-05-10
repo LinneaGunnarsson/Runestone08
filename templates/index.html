@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://130.243.212.217:5000');
+	var socket = io.connect('http://192.168.1.106:5000/');
 	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
@@ -37,36 +37,37 @@ $(document).ready(function() {
 
 	function commandButton(){
 	$('#upbutton').on('click', function() {
-		socket.emit('up');
+		socket.emit('command', {'command': 'move-straight'});
 	});
 	$('#downbutton').on('click', function() {
 		socket.emit('down');
 	});
 	$('#rightbutton').on('click', function() {
-		socket.emit('right');
+		socket.emit('command', {'command': 'move-right'});
 	});
 	$('#leftbutton').on('click', function() {
-		socket.emit('left');
+		socket.emit('command', {'command': 'move-left'});
 	});
-}
+	$('#pickupbutton').on('click', function() {
+		socket.emit('command', {'command': 'pick up'});
+	});
+	$('#dropbutton').on('click', function() {
+		socket.emit('command', {'command': 'drop'});
+	});
+	}
 });
 
-
-$('myMessage').onkeydown = function(e){
-y = e.keyCode
-if(y == 37){
-console.log("upp")
-}
-};
 </script>
 <ul id="messages"></ul>
 <input type="text" id="myMessage">
 <button id="sendbutton">Send</button>
 <button id="commandbutton" value = '0'>Take control</button>
-<button id="upbutton">Up</button>
+<button id="upbutton">Forward</button>
 <button id="downbutton">down</button>
-<button id="rightbutton">right</button>
-<button id="leftbutton">left</button>
+<button id="rightbutton">Right</button>
+<button id="leftbutton">Left</button>
+<button id="pickupbutton">Pick up</button>
+<button id="dropbutton">Drop object</button>
 
 <h1>Video streaming demo here</h1>
 <img src="{{ url_for('video_feed') }}">
