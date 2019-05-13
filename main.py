@@ -50,6 +50,10 @@ def handleRobotDisconnect():
 			print('Robot ' + robotArray[i].getId() + ' leaves the warehouse!')
 			robotArray.pop(i)
 
+@socketio.on('connect', namespace='/camera')
+def handleCameraConnect():
+	print('Camera connected!')
+
 @socketio.on('message')
 def handleMessage(msg):
 	print('session id: ' + request.sid)
@@ -112,7 +116,7 @@ def handleCommand(msg):
 def index():
 	return render_template('index.html')
 
-'''
+
 #TUTORIAL BORJAR HAR
 def gen(camera):
 	while True:
@@ -122,10 +126,14 @@ def gen(camera):
 
 @app.route('/video_feed')
 def video_feed():
-	return Response(gen(Camera()),
-		mimetype='multipart/x-mixed-replace; boundary=frame')
+	socketio.emit('send img')
+	@socketio.on('return frame')
+	def handleFrame(frame):
+
+		return Response(frame,
+			mimetype='multipart/x-mixed-replace; boundary=frame')
 #TUTORIAL SLUTAR HAR
-'''
+
 
 
 if __name__ == '__main__':
