@@ -9,12 +9,12 @@ def handleConnect():
 @s.on('move', namespace = '/robot')
 def handleMove(msg):
     print(msg['command'])
-    success = 0
+    success = 1
     if(success == 1):
         s.emit('result', {'re-id': msg['id'], 'status': 'successful'})
     else:
         s.emit('result', {'re-id': msg['id'], 'status': 'fail'})
 
 
-s.connect('http://130.243.235.165:5000/robot', namespaces=['/robot'])
+s.connect('http://192.168.1.106:5000/robot', namespaces=['/robot'])
 s.wait()
