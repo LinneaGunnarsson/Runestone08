@@ -7,7 +7,7 @@
 <body>
 <script type="text/javascript">
 $(document).ready(function() {
-	var socket = io.connect('http://130.243.235.165:5000/');
+	var socket = io.connect('http://192.168.1.106:5000/');
 	
 	socket.on('connect', function() {
 		socket.send('User has connected!');
@@ -69,6 +69,7 @@ $(document).ready(function() {
 <button id="pickupbutton">Pick up</button>
 <button id="dropbutton">Drop object</button>
 
-
+<h1>Video Streaming Demonstration</h1>
+    <img src="{{ url_for('video_feed') }}">
 </body>
 </html>
