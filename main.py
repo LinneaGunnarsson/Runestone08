@@ -96,7 +96,7 @@ def handleDown():
 		send("down", broadcast=True)
 
 if __name__ == '__main__':
-	socketio.run(app, host = "192.168.1.106", debug = True)
+	socketio.run(app, host = "192.168.1.69", debug = True)
 
 '''
 @socketio.on('straight')
